@@ -1,31 +1,87 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Manage Users</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Password</th>
-              <th>PhoneNumber</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{ user.name }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.password }}</td>
-              <td>{{ user.phonenum }}</td>
-              <td>
-                <button class="btn btn-sm btn-primary">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<div class="container">
+  <h2>Manage Users</h2>
+
+  <button class="btn btn-primary mb-4" (click)="addUserForm()">Add New User</button>
+  
+  <div class="card mb-4" *ngIf="showAddForm">
+    <div class="card-header">
+      Add User
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="addUser()">
+        <div class="form-group">
+          <label for="addName">Name:</label>
+          <input type="text" id="addName" [(ngModel)]="newUser.name" name="addName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="addEmail">Email:</label>
+          <input type="email" id="addEmail" [(ngModel)]="newUser.email" name="addEmail" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="addPassword">Password:</label>
+          <input type="password" id="addPassword" [(ngModel)]="newUser.password" name="addPassword" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="addPhoneNumber">Phone Number:</label>
+          <input type="text" id="addPhoneNumber" [(ngModel)]="newUser.phone_number" name="addPhoneNumber" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="addRole">Role:</label>
+          <input type="text" id="addRole" [(ngModel)]="newUser.role" name="addRole" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Add User</button>
+      </form>
     </div>
   </div>
-  
+
+  <!-- Users Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>PhoneNumber</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="prepareUpdate(user)">Update</button>
+          <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Update User Form -->
+  <div *ngIf="updateUser" class="card mt-4">
+    <div class="card-header">
+      Update User
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="updateUserAction()">
+        <div class="form-group">
+          <label for="updateName">Name:</label>
+          <input type="text" id="updateName" [(ngModel)]="updateUser.name" name="updateName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="updatePhoneNumber">Phone Number:</label>
+          <input type="text" id="updatePhoneNumber" [(ngModel)]="updateUser.phone_number" name="updatePhoneNumber" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="updateRole">Role:</label>
+          <input type="text" id="updateRole" [(ngModel)]="updateUser.role" name="updateRole" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
